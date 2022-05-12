@@ -1,0 +1,41 @@
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../variables";
+
+.thumbnail-logo {
+    width: 120px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+
+.active {
+    & a {
+      border: 2px solid $secondary-color;
+    }
+  }
+  .menu {
+    nav {
+      .navbar-toggler {
+        margin: 0.5em;
+      }
+      padding: 0.5em;
+      ul {
+        a {
+          text-align: center;
+          color: $white !important;
+          font-weight: $font-weight;
+          background: none;
+          &:hover {
+            border: 2px solid $secondary-color;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      display: block;
+      padding: 0;
+    }
+  }

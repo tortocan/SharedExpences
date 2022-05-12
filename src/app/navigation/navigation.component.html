@@ -1,1 +1,25 @@
-<p>navigation works!</p>
+<div class="menu">
+
+    <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+      <a class="navbar-brand nav-logo" href="home">
+        <img class="thumbnail-logo" src="https://www.entradas.com/obj/media/ES-eventim/specialLogos/checkoutApp/logo.svg"/>
+      </a>
+      <button #navbarToggler  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item" [routerLinkActive]="['active']" (click)="collapseNav()">
+            <a class="m-2 btn btn-outline-light" routerLink="home" (click)="collapseNav()">Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']" (click)="collapseNav()">
+            <a class="m-2 btn btn-outline-light" routerLink="expenses">Expenses</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']" (click)="collapseNav()">
+            <a class="m-2 btn btn-outline-light" routerLink="balance">Balance</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
