@@ -1,1 +1,16 @@
-<p>expenses works!</p>
+
+<div class="btn-group m-1" role="group">
+    <button class="btn btn-primary">Añadir Gasto</button>
+    <button class="btn btn-primary">Añadir Amigo</button>
+</div>
+<div class="d-flex flex-row flex-wrap" *ngIf="expenses.length !== 0">
+    <div *ngFor="let expense of expenses;let i = index" class="card m-3" style="width: 18rem;">
+        <i class="bi bi-person-circle"></i>
+        <div class="card-body">
+            <h5 class="card-title">{{expense.User.FullName}}</h5>
+            <p>Coste: {{expense.Payment.Amount}}€</p>
+            <p>Description: {{expense.Payment.Description}}</p>
+            <p>{{expense.Payment.Date | amTimeAgo | titlecase}}</p>
+        </div>
+    </div>
+</div>

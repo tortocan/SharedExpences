@@ -1,0 +1,13 @@
+.card-img, .card-img-top{
+    border-radius: 50% !important;
+    background: red;
+}
+
+.bi-person-circle::before {
+    font-size: 200px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: gray;
+    margin:10px;
+}

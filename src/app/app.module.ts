@@ -8,6 +8,9 @@ import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
 import { BalanceComponent } from './balance/balance.component';
+import { QueryService } from './query.service';
+import { HttpClientModule } from '@angular/common/http';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -20,9 +23,11 @@ import { BalanceComponent } from './balance/balance.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    MomentModule
   ],
-  providers: [],
+  providers: [QueryService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
