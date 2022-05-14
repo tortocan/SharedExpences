@@ -1,7 +1,69 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <a class="close ms-auto" aria-label="Close" (click)="d('Cross click')">
+            <div class="bi bi-x-circle video-x-circle"></div>
+        </a>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <div ngbDropdown class="d-inline-block">
+                    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1"
+                        ngbDropdownToggle>{{selectedUserTitle}}</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button (click)="selectUser(user)" type="button" *ngFor="let user of users;let i = index"
+                            ngbDropdownItem>{{user.FullName}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="paymentAmount">Coste Pago</label>
+                <input type="text" class="form-control" id="paymentAmount" [formControl]="paymentAmount">
+            </div>
+            <div class="form-group">
+                <label for="paymentDescription">Descripcion</label>
+                <input type="text" class="form-control" id="paymentDescription" [formControl]="paymentDescription">
+            </div>
+            <button type="button" (click)="addExpense()" class="btn btn-primary mt-2">Guardar
+            </button>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <ul class="d-flex flex-row align-items-center list-unstyled mr-auto">
+        </ul>
+    </div>
+</ng-template>
 
+<ng-template #content2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <a class="close ms-auto" aria-label="Close" (click)="d('Cross click')">
+            <div class="bi bi-x-circle video-x-circle"></div>
+        </a>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <div ngbDropdown class="d-inline-block">
+                    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1"
+                        ngbDropdownToggle>{{selectedUserTitle}}</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button (click)="selectUser(user)" type="button" *ngFor="let user of users;let i = index"
+                            ngbDropdownItem>{{user.FullName}}</button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" (click)="addUserToExpenseGroup()" class="btn btn-primary mt-2">Guardar
+            </button>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <ul class="d-flex flex-row align-items-center list-unstyled mr-auto">
+        </ul>
+    </div>
+</ng-template>
 <div class="btn-group m-1" role="group">
-    <button class="btn btn-primary">Añadir Gasto</button>
-    <button class="btn btn-primary">Añadir Amigo</button>
+    <button (click)="openAddExpense(content)" class="btn btn-primary">Añadir Gasto</button>
+    <button (click)="openAddUser(content2)" class="btn btn-secondary">Añadir Amigo</button>
 </div>
 <div class="d-flex flex-row flex-wrap" *ngIf="expenses.length !== 0">
     <div *ngFor="let expense of expenses;let i = index" class="card m-3" style="width: 18rem;">

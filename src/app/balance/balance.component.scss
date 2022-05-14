@@ -1,0 +1,23 @@
+@import "./../../../variables";
+
+.card-img, .card-img-top{
+    border-radius: 50% !important;
+}
+
+.bi-person-circle::before {
+    font-size: 200px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: grey;
+    margin:10px;
+}
+
+.bi-arrow-right-circle-fill::before {
+    font-size: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: $secondary;
+    margin:10px;
+}

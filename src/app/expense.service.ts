@@ -26,6 +26,21 @@ export interface IExpense {
   ExpenseGroup: IExpenseGroup;
 }
 
+export interface IBalance {
+  User:IUser,
+  Amount: number
+}
+export interface IBalanceDue {
+  To: IUser,
+  From: IUser,
+  Amount: number
+}
+
+export interface IBalanceSummary {
+  Balance: IBalance[],
+  BalanceDue: IBalanceDue[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,10 +49,33 @@ export class ExpenseService {
 
   constructor(private http: HttpClient, private queryService: QueryService) { }
 
+  addExpense(request:  { UserId: number; ExpenseGroupId: number; Expense: IExpense; }): Observable<Boolean>  {
+    const url = this.queryService.buildUrl(ServiceResource.Expenses);
+    return this.http.post<boolean>(url,request);
+  }
+
+  addUserToExpenseGroup(request: { userId: number; expenseGroupId: number; }) : Observable<Boolean>  {
+    const url = this.queryService.buildUrl(ServiceResource.AddUserToExpenseGroup);
+    return this.http.post<boolean>(url,request);
+  }
+
+  getExpenseGroupBalance(request: { expenseGroupId: number; }): Observable<IBalanceSummary> {
+    this.queryService.addOrUpdateQueryParam({ key: 'expenseGroupId', value: request.expenseGroupId});
+    const url = this.queryService.buildUrl(ServiceResource.Expenses,ServiceResource.GetExpenseGroupBalance);
+    return this.http.get<IBalanceSummary>(url, { headers: this.headersParams })
+    .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getExpenseGroupUsers(defaultExpenseGroupId: number): Observable<IUser[]>  {
+    this.queryService.addOrUpdateQueryParam({ key: 'expenseGroupId', value: defaultExpenseGroupId});
+    const url = this.queryService.buildUrl(ServiceResource.Expenses,ServiceResource.GetExpenseGroupUsers);
+    return this.http.get<IUser[]>(url, { headers: this.headersParams })
+    .pipe(retry(1), catchError(this.handleError));
+  }
+
   getExpenses(defaultExpenseGroupId: number): Observable<IExpense[]> {
     this.queryService.addOrUpdateQueryParam({ key: 'expenseGroupId', value: defaultExpenseGroupId});
     const url = this.queryService.buildUrl(ServiceResource.Expenses);
-    var result:IExpense[] =[];
     return this.http.get<IExpense[]>(url, { headers: this.headersParams })
     .pipe(retry(1), catchError(this.handleError));
   }

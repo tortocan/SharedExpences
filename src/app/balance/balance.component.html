@@ -1,1 +1,41 @@
-<p>balance works!</p>
+<h1>Balance</h1>
+<div class="d-flex flex-row flex-wrap" *ngIf="balanceSummary.Balance.length !== 0">
+    <div *ngFor="let balance of balanceSummary.Balance;let i = index" class="card m-3" style="width: 18rem;">
+        <i class="bi bi-person-circle"></i>
+        <div class="card-body">
+            <h5 class="card-title">{{balance.User.FullName}}</h5>
+            <div class="d-flex flex-row">
+                <p>Coste:</p>
+                <p [ngClass]="{ 'text-success': balance.Amount > 0 , 'text-danger': balance.Amount < 0 } " class="ms-1">
+                    {{balance.Amount}}€</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="balanceSummary.BalanceDue.length !== 0">
+
+    <h1>Deudas</h1>
+    <div class="d-flex flex-row flex-wrap align-items-center" *ngFor="let balance of balanceSummary.BalanceDue;let i = index">
+        <div class="card m-3" style="width: 18rem;">
+            <i class="bi bi-person-circle"></i>
+            <div class="card-body">
+                <h5 class="card-title">{{balance.From.FullName}}</h5>
+                <div class="d-flex flex-row">
+                    <p>Pagar:</p>
+                    <p class="text-danger">{{balance.Amount}}€</p>
+                </div>
+            </div>
+        </div>
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <div class="card m-3" style="width: 18rem;">
+            <i class="bi bi-person-circle"></i>
+            <div class="card-body">
+                <h5 class="card-title">{{balance.To.FullName}}</h5>
+                <div class="d-flex flex-row">
+                    <p>Recibir:</p>
+                    <p class="text-success">{{balance.Amount | abs}}€</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,11 @@ export interface IQueryParam {
 }
 export enum ServiceResource {
   Expenses,
-  Balance
+  Balance,
+  GetExpenseGroupUsers,
+  AddUserToExpenseGroup,
+  User,
+  GetExpenseGroupBalance
 }
 @Injectable({
   providedIn: 'root'
@@ -46,12 +50,17 @@ export class QueryService {
   getUrl(baserUrl: string, urlResource: string) {
     return `${baserUrl}${urlResource}${this.items.length ? `?${this.items.map((value, i) => i === 0 ? value : `&${value}`).join('')}` : ''}`;
   }
-  buildUrl(resource: any, baserUrl = 'http://localhost:4200/api/'): string {
-    const urlResource = typeof (resource) === 'string'
+  buildUrl(resource: any, resource2: any = undefined, baserUrl = 'http://localhost:4200/api/'): string {
+    let urlResource = typeof (resource) === 'string'
       ? resource
       : this.camelize(ServiceResource[resource]);
     this.items = this.items.filter(x => !!x);
-
+    if(resource2) {
+      urlResource +=  "/";
+      urlResource += typeof (resource2) === 'string'
+      ? resource2
+      : this.camelize(ServiceResource[resource2]);
+    }
     this.srcValue = this.getUrl(baserUrl,urlResource);
     const url = this.srcValue;
     this.clear();

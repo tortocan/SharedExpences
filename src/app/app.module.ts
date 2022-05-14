@@ -11,6 +11,10 @@ import { BalanceComponent } from './balance/balance.component';
 import { QueryService } from './query.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MomentModule } from 'ngx-moment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AbsPipe } from './abs.pipe';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -19,15 +23,19 @@ import { MomentModule } from 'ngx-moment';
     HomeComponent,
     NavigationComponent,
     FooterComponent,
-    BalanceComponent
+    BalanceComponent,
+    AbsPipe,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MomentModule
+    MomentModule,
+    NgbModule,
+    ReactiveFormsModule
   ],
-  providers: [QueryService ],
+  providers: [QueryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
