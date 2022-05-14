@@ -3,7 +3,7 @@ import { ExpenseService, IExpense, IUser } from '../expense.service';
 import moment from 'moment';
 import 'moment/locale/es'  // without this line it didn't work
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThisReceiver } from '@angular/compiler';
 import { UserService } from '../user.service';
 import { ToastService } from '../toast.service';
@@ -18,22 +18,34 @@ export class ExpensesComponent implements OnInit {
   expenses: IExpense[] = [];
   users: IUser[] = [];
   defaultExpenseGroupId: number = 1;
-  paymentAmount = new FormControl('');
-  paymentDescription = new FormControl('');
-  selectedUser: IUser;
+  paymentAmount = new FormControl('', [
+    Validators.required,
+  ]);
+  paymentDescription = new FormControl('', [
+    Validators.required,
+  ]);
+  selectedUser = new FormControl({} as IUser, [
+    Validators.required,
+  ]);
   selectedUserTitle = "Selecionar un usuario";
+  form: FormGroup;
+  submitted = false;
 
-  constructor(private expenseService: ExpenseService, private modalService: NgbModal, private userService: UserService, private toast: ToastService) {
+  constructor(private expenseService: ExpenseService, private modalService: NgbModal, private userService: UserService, private toast: ToastService,private formBuilder: FormBuilder) {
+
   }
 
   selectUser(user: any) {
-    this.selectedUser = user;
-    this.selectedUserTitle = user.FullName;
+    this.selectedUser.setValue(user);
   }
 
   addExpense() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      this.toast.warning("Formulario no valido!");
+    }
     const expense: IExpense = {
-      User: this.selectedUser,
+      User: this.selectedUser.value,
       Payment: {
         Amount: this.paymentAmount.value as number,
         Description: this.paymentDescription.value as string,
@@ -45,7 +57,7 @@ export class ExpensesComponent implements OnInit {
     } as IExpense;
 
     let request = {
-      UserId: this.selectedUser.Id,
+      UserId: this.selectedUser.value.Id,
       ExpenseGroupId: this.defaultExpenseGroupId,
       Expense: expense
     };
@@ -65,7 +77,7 @@ export class ExpensesComponent implements OnInit {
 
   addUserToExpenseGroup() {
     let request = {
-      userId: this.selectedUser.Id,
+      userId: this.selectedUser.value.Id,
       expenseGroupId: this.defaultExpenseGroupId
     };
     this.expenseService.addUserToExpenseGroup(request).subscribe({
@@ -96,9 +108,17 @@ export class ExpensesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      paymentAmount: this.paymentAmount,
+      selectedUser: this.selectedUser,
+      paymentDescription: this.paymentDescription
+    });
     this.expenseService.getExpenses(this.defaultExpenseGroupId).subscribe((data: any) => {
       this.expenses = data;
     });;
   }
 
+  onSubmit(form: any) {
+    console.log(form.value);
+  }
 }

@@ -1,30 +1,36 @@
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
+        <h2>Añadir un gasto</h2>
         <a class="close ms-auto" aria-label="Close" (click)="d('Cross click')">
             <div class="bi bi-x-circle video-x-circle"></div>
         </a>
     </div>
     <div class="modal-body">
-        <form>
+        <form [formGroup]="form" (ngSubmit)="addExpense()">
             <div class="form-group">
-                <div ngbDropdown class="d-inline-block">
-                    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1"
-                        ngbDropdownToggle>{{selectedUserTitle}}</button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button (click)="selectUser(user)" type="button" *ngFor="let user of users;let i = index"
-                            ngbDropdownItem>{{user.FullName}}</button>
+                    <label for="user">Usuario</label>
+                    <select id="user" class="form-control" [formControl]="selectedUser" [ngClass]="{ 'is-invalid': selectedUser.invalid  && (submitted || selectedUser.dirty || selectedUser.touched) }" required>
+                      <option   *ngFor="let user of users;let i = index" [ngValue]="user">{{user.FullName}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="selectedUser.invalid && (submitted || selectedUser.dirty || selectedUser.touched)">
+                        <p *ngIf="selectedUser.errors?.['required']">Usuario es requerido</p>
                     </div>
-                </div>
             </div>
             <div class="form-group">
                 <label for="paymentAmount">Coste Pago</label>
-                <input type="text" class="form-control" id="paymentAmount" [formControl]="paymentAmount">
+                <input type="text" class="form-control" id="paymentAmount" [formControl]="paymentAmount" [ngClass]="{ 'is-invalid': paymentAmount.invalid  && (submitted || paymentAmount.dirty || paymentAmount.touched) }" required>
+                <div class="invalid-feedback" *ngIf="paymentAmount.invalid && (submitted || paymentAmount.dirty || paymentAmount.touched)">
+                  <p *ngIf="paymentAmount.errors?.['required']">Coste es requerido</p>
+                </div>
             </div>
             <div class="form-group">
                 <label for="paymentDescription">Descripcion</label>
-                <input type="text" class="form-control" id="paymentDescription" [formControl]="paymentDescription">
+                <input type="text" class="form-control" id="paymentDescription" [formControl]="paymentDescription"[ngClass]="{ 'is-invalid': paymentDescription.invalid  && (submitted || paymentDescription.dirty || paymentDescription.touched) }" required>
+                <div class="invalid-feedback" *ngIf="paymentDescription.invalid && (submitted || paymentDescription.dirty || paymentDescription.touched)">
+                  <p *ngIf="paymentDescription.errors?.['required']">Descripcion es requerido</p>
+                </div>
             </div>
-            <button type="button" (click)="addExpense()" class="btn btn-primary mt-2">Guardar
+            <button type="submit" class="btn btn-primary mt-2" [disabled]="!form.valid">Guardar
             </button>
         </form>
     </div>
@@ -36,23 +42,23 @@
 
 <ng-template #content2 let-c="close" let-d="dismiss">
     <div class="modal-header">
+        <h2>Añadir un usuario como amigo</h2>
         <a class="close ms-auto" aria-label="Close" (click)="d('Cross click')">
             <div class="bi bi-x-circle video-x-circle"></div>
         </a>
     </div>
     <div class="modal-body">
-        <form>
+        <form [formGroup]="form" (ngSubmit)="addUserToExpenseGroup()">
             <div class="form-group">
-                <div ngbDropdown class="d-inline-block">
-                    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1"
-                        ngbDropdownToggle>{{selectedUserTitle}}</button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button (click)="selectUser(user)" type="button" *ngFor="let user of users;let i = index"
-                            ngbDropdownItem>{{user.FullName}}</button>
+                    <label for="user">Usuario</label>
+                    <select id="user" class="form-control" [formControl]="selectedUser" [ngClass]="{ 'is-invalid': selectedUser.invalid  && (submitted || selectedUser.dirty || selectedUser.touched) }" required>
+                      <option   *ngFor="let user of users;let i = index" [ngValue]="user">{{user.FullName}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="selectedUser.invalid && (submitted || selectedUser.dirty || selectedUser.touched)">
+                        <p *ngIf="selectedUser.errors?.['required']">Usuario es requerido</p>
                     </div>
-                </div>
             </div>
-            <button type="button" (click)="addUserToExpenseGroup()" class="btn btn-primary mt-2">Guardar
+            <button type="submit" class="btn btn-primary mt-2">Guardar
             </button>
         </form>
     </div>
