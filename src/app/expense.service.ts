@@ -63,21 +63,21 @@ export class ExpenseService {
     this.queryService.addOrUpdateQueryParam({ key: 'expenseGroupId', value: request.expenseGroupId});
     const url = this.queryService.buildUrl(ServiceResource.Expenses,ServiceResource.GetExpenseGroupBalance);
     return this.http.get<IBalanceSummary>(url, { headers: this.headersParams })
-    .pipe(retry(1), catchError(this.handleError));
+    .pipe(retry(0), catchError(this.handleError));
   }
 
   getExpenseGroupUsers(defaultExpenseGroupId: number): Observable<IUser[]>  {
     this.queryService.addOrUpdateQueryParam({ key: 'expenseGroupId', value: defaultExpenseGroupId});
     const url = this.queryService.buildUrl(ServiceResource.Expenses,ServiceResource.GetExpenseGroupUsers);
     return this.http.get<IUser[]>(url, { headers: this.headersParams })
-    .pipe(retry(1), catchError(this.handleError));
+    .pipe(retry(0), catchError(this.handleError));
   }
 
   getExpenses(defaultExpenseGroupId: number): Observable<IExpense[]> {
     this.queryService.addOrUpdateQueryParam({ key: 'expenseGroupId', value: defaultExpenseGroupId});
     const url = this.queryService.buildUrl(ServiceResource.Expenses);
     return this.http.get<IExpense[]>(url, { headers: this.headersParams })
-    .pipe(retry(1), catchError(this.handleError));
+    .pipe(retry(0), catchError(this.handleError));
   }
 
   // Error handling

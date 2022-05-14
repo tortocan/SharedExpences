@@ -22,7 +22,7 @@
                 <h5 class="card-title">{{balance.From.FullName}}</h5>
                 <div class="d-flex flex-row">
                     <p>Pagar:</p>
-                    <p class="text-danger">{{balance.Amount}}€</p>
+                    <p class="text-danger">{{balance.Amount | number : '1.2-2'}}€</p>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <h5 class="card-title">{{balance.To.FullName}}</h5>
                 <div class="d-flex flex-row">
                     <p>Recibir:</p>
-                    <p class="text-success">{{balance.Amount | abs}}€</p>
+                    <p class="text-success">{{balance.Amount | abs | number : '1.2-2'}}€</p>
                 </div>
             </div>
         </div>

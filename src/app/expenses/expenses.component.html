@@ -76,7 +76,7 @@
         <i class="bi bi-person-circle"></i>
         <div class="card-body">
             <h5 class="card-title">{{expense.User.FullName}}</h5>
-            <p>Coste: {{expense.Payment.Amount}}€</p>
+            <p>Coste: {{expense.Payment.Amount | number : '1.0-2'}}€</p>
             <p>Description: {{expense.Payment.Description}}</p>
             <p>{{expense.Payment.Date | amTimeAgo | titlecase}}</p>
         </div>
